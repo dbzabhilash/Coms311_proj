@@ -22,6 +22,7 @@ public class IntervalTreap {
     }
 
     public void intervalInsert(Node z){
+        size++;     // update size to reflect new number of nodes in treap
 
     }
 

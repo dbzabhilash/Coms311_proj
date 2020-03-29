@@ -5,13 +5,16 @@ public class Node {
     private Node right = null;
     private Node parent = null;
     private Interval interv;
-    private int imax = -1;      // set to -1 by default, TODO: consider changing to interv.getHigh()
+    private int imax;
     private int priority;
     public Node(Interval i){
         interv = i;
         //TODO: generate a priority for the node
         Random random = new Random();
         priority = random.nextInt(Integer.MAX_VALUE);
+
+        // imax set to -1 by default, TODO: consider changing to interv.getHigh()
+        imax = -1;
     }
     public Node getParent(){
         return parent;
@@ -49,6 +52,7 @@ public class Node {
     }
     public int setIMax(int newImax){
         this.imax = newImax;
+        return this.imax;
     }
 
 }
