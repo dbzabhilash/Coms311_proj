@@ -1,4 +1,7 @@
 public class Node {
+    private Node left = null;
+    private Node right = null;
+    private Node parent = null;
     private Interval interv;
     private int imax;
     private int priority;
@@ -8,18 +11,15 @@ public class Node {
 
     }
     public Node getParent(){
-        //TODO:
-        return null;
+        return parent;
     }
 
     public Node getLeft(){
-        //TODO:
-        return null;
+        return left;
     }
 
     public Node getRight(){
-        //TODO:
-        return null;
+        return right;
     }
 
     public Interval getInterv() {
@@ -29,10 +29,20 @@ public class Node {
     public int getIMax(){
         return imax;
     }
+
     public int getPriority(){
         return priority;
     }
 
-
+    // helper methods
+    public void setParent(Node parent){
+        this.parent = parent;
+    }
+    public void setLeft(Node left){
+        this.left = left;
+    }
+    public void setRight(Node right){
+        this.right = right;
+    }
 
 }
