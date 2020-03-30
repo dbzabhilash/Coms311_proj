@@ -30,8 +30,21 @@ public class IntervalTreap {
 
     }
 
-    public Node intervalSearch(Node z){
+    public Node intervalSearch(Interval i){
+        Node temp = root;
+        while(temp!=null && !overlap(temp.getInterv(),i)){
+            if(temp.getLeft().getIMax()>=i.getLow() && temp.getLeft()!=null){
+                temp = temp.getLeft();
+            }
+            else{
+                temp = temp.getRight();
+            }
+        }
+        return temp;
+    }
 
-        return z;
+    public boolean overlap(Interval y,Interval z){
+        if(y.getLow()<=z.getHigh() && z.getLow()<=y.getHigh())   return true;
+        else return false;
     }
 }
