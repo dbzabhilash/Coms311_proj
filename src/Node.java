@@ -5,6 +5,7 @@ public class Node {
     private Node right = null;
     private Node parent = null;
     private Interval interv;
+    private int nodeHeight;
     private int imax;
     private int priority;
     public Node(Interval i){
@@ -15,6 +16,7 @@ public class Node {
 
         // imax set to -1 by default, TODO: consider changing to interv.getHigh()
         imax = -1;
+        nodeHeight = 0;
     }
     public Node getParent(){
         return parent;
@@ -38,6 +40,10 @@ public class Node {
 
     public int getPriority(){
         return priority;
+    }
+
+    public int getNodeHeight() {
+        return nodeHeight;
     }
 
     // helper methods
