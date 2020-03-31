@@ -41,7 +41,8 @@ public class mainRunner {
 
         //  Test treap insertion
         IntervalTreap T = new IntervalTreap();
-        for(int n=0; n<25; n++){
+        int lowest = Integer.MAX_VALUE;
+        for(int n=0; n<5; n++){
             randLow = rand.nextInt(100);
             randHigh = rand.nextInt(100) + randLow;
             i = new Interval(randLow,randHigh);
@@ -50,11 +51,13 @@ public class mainRunner {
             ndImax = nd.getIMax();
             System.out.println("Node nd"+(n+1)+" stores interval " +
                     "("+randLow+","+randHigh+") has priority: "+ ndPrio+" and Imax: "+ ndImax);
+            if(ndPrio<lowest)   lowest = ndPrio;
             T.intervalInsert(nd);
         }
-        Node firstLeft = T.getRoot();
-        System.out.println(firstLeft);
-        System.out.println("Root node has interval ("+firstLeft.getInterv().getLow()+","+firstLeft.getInterv().getHigh()+")");
+        Node rootNode = T.getRoot();
+        System.out.println(rootNode);
+        System.out.println("Root node has interval ("+rootNode.getInterv().getLow()+","+rootNode.getInterv().getHigh()+")");
+        System.out.println("The lowest priority is "+lowest);
 
 
     }

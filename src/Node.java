@@ -12,8 +12,8 @@ public class Node {
         interv = i;
         //TODO: generate a priority for the node
         Random random = new Random();
-        priority = random.nextInt(Integer.MAX_VALUE);
-
+//        priority = random.nextInt(Integer.MAX_VALUE);
+        priority = random.nextInt(100);
         // imax set to i.getHigh() by default
         imax = i.getHigh();
         nodeHeight = 0;

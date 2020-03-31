@@ -26,7 +26,7 @@ public class IntervalTreap {
 //        height++;   // update height to reflect new number of nodes in treap
         if(root == null) root = z;
         else{
-            Node temp = new Node(root);
+            Node temp = root; //dont make this new lmao
             Node lastVisit = null;
             int lastLeft = -1;
             int key = z.getInterv().getLow();
@@ -57,7 +57,7 @@ public class IntervalTreap {
             // lastLeft = -1 if not initialized otherwise
 
             while(z!=root && z.getPriority() < z.getParent().getPriority()){
-                if(z.getParent().getLeft().equals(z)){
+                if(z.getParent().getLeft()==z){
                     rightRotate(z);
                 }
                 else{
@@ -72,7 +72,7 @@ public class IntervalTreap {
     }
 
     public Node intervalSearch(Interval i){
-        Node temp = new Node(root);
+        Node temp = root;
         while(temp!=null && !overlap(temp.getInterv(),i)){
             if(temp.getLeft().getIMax()>=i.getLow() && temp.getLeft()!=null){
                 temp = temp.getLeft();
@@ -94,11 +94,11 @@ public class IntervalTreap {
         z.setRight(z.getParent());
         Node paa = z.getParent();
 
-        if(paa.getInterv().equals(root.getInterv())){
+        if(paa == root){
             root = z;
         }
         else{   // making relations with grandparent
-            if(paa.getParent().getLeft().equals(paa)){
+            if(paa.getParent().getLeft()==paa){ //check if left child
                 // My paa's a left child
                 paa.getParent().setLeft(z);
             }
@@ -118,11 +118,11 @@ public class IntervalTreap {
         z.setLeft(z.getParent());
         Node paa = z.getParent();
 
-        if(paa.equals(root)){
+        if(paa == root){
             root = z;
         }
         else{   // making relations with grandparent
-            if(paa.getParent().getLeft().equals(paa)){
+            if(paa.getParent().getLeft()==paa){
                 // My paa's a left child
                 paa.getParent().setLeft(z);
             }
