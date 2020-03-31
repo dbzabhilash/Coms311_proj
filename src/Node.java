@@ -14,9 +14,28 @@ public class Node {
         Random random = new Random();
         priority = random.nextInt(Integer.MAX_VALUE);
 
-        // imax set to -1 by default, TODO: consider changing to interv.getHigh()
-        imax = -1;
+        // imax set to i.getHigh() by default
+        imax = i.getHigh();
         nodeHeight = 0;
+    }
+    public Node(Node node_OG){    //  constructor overloading for cloning
+        interv = node_OG.getInterv();
+        parent = node_OG.getParent();
+        left = node_OG.getLeft();
+        right = node_OG.getRight();
+        imax = node_OG.getIMax();
+        nodeHeight = node_OG.getNodeHeight();
+        priority = node_OG.getPriority();
+
+    }
+    public Node cloner(Node node_OG){
+        Node retNode = new Node(node_OG.getInterv());
+        retNode.setLeft(node_OG.getLeft());
+        retNode.setRight(node_OG.getRight());
+        retNode.setParent(node_OG.getParent());
+        retNode.setIMax(node_OG.getIMax());
+        retNode.setPriority(node_OG.getPriority());
+        return retNode;
     }
     public Node getParent(){
         return parent;
@@ -59,6 +78,14 @@ public class Node {
     public int setIMax(int newImax){
         this.imax = newImax;
         return this.imax;
+    }
+    public int setPriority(int newPriority){
+        this.priority = newPriority;
+        return this.priority;
+    }
+    public int setNodeHeight(int nodeHeight){
+        this.nodeHeight = nodeHeight;
+        return this.nodeHeight;
     }
 
 }

@@ -23,32 +23,35 @@ public class IntervalTreap {
 
     public void intervalInsert(Node z){
         size++;     // update size to reflect new number of nodes in treap
-        height++;   // update height to reflect new number of nodes in treap
+//        height++;   // update height to reflect new number of nodes in treap
         if(root == null) root = z;
         else{
-            Node temp = new Node(root.getInterv());
+            Node temp = new Node(root);
             Node lastVisit = null;
             int lastLeft = -1;
             int key = z.getInterv().getLow();
             while(temp!=null){
-                lastVisit = temp;
+//                lastVisit = temp;
                 if(key < temp.getInterv().getLow()){
-                    temp = temp.getLeft();
+//                    temp = temp.getLeft();
                     lastLeft = 1;
+                    if(temp.getLeft()==null) break;
+                    temp = temp.getLeft();
                 }
                 else{
-                    temp = temp.getRight();
                     lastLeft = 0;
+                    if(temp.getRight()==null) break;
+                    temp = temp.getRight();
                 }
             }
-            z.setParent(lastVisit);
+            z.setParent(temp);
 
             //  setting lastVisit's children
             if(lastLeft==1){
-                lastVisit.setLeft(z);
+                temp.setLeft(z);
             }
             else if(lastLeft==0){
-                lastVisit.setRight(z);
+                temp.setRight(z);
             }
             else  System.out.println("Error: lastLeft not initialized, lastLeft ="+ lastLeft);
             // lastLeft = -1 if not initialized otherwise
@@ -69,7 +72,7 @@ public class IntervalTreap {
     }
 
     public Node intervalSearch(Interval i){
-        Node temp = new Node(root.getInterv());
+        Node temp = new Node(root);
         while(temp!=null && !overlap(temp.getInterv(),i)){
             if(temp.getLeft().getIMax()>=i.getLow() && temp.getLeft()!=null){
                 temp = temp.getLeft();
@@ -91,7 +94,7 @@ public class IntervalTreap {
         z.setRight(z.getParent());
         Node paa = z.getParent();
 
-        if(paa.equals(root)){
+        if(paa.getInterv().equals(root.getInterv())){
             root = z;
         }
         else{   // making relations with grandparent

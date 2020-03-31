@@ -28,15 +28,34 @@ public class mainRunner {
         System.out.println("Node nd imax = "+nd.getIMax());
         System.out.println("Node newND imax = "+newND.getIMax());
 
-        //  Test Nullable
+        //  Test Nullable and cloning
         newND.setParent(null);
         nd.setParent(newND.getParent());
         System.out.println("Node newND parent = "+newND.getParent());
         System.out.println("Node nd parent = "+nd.getParent());
+        Node nod0 = new Node(i);
+        Node nod1 = new Node(nod0);
+        nod1.setIMax(100);
+        System.out.println("Node nod0 parent = "+nod0.getIMax());
+        System.out.println("Node nod1 parent = "+nod1.getIMax());
 
         //  Test treap insertion
-        IntervalTreap T;
-        T.
+        IntervalTreap T = new IntervalTreap();
+        for(int n=0; n<25; n++){
+            randLow = rand.nextInt(100);
+            randHigh = rand.nextInt(100) + randLow;
+            i = new Interval(randLow,randHigh);
+            nd = new Node(i);
+            ndPrio = nd.getPriority();
+            ndImax = nd.getIMax();
+            System.out.println("Node nd"+(n+1)+" stores interval " +
+                    "("+randLow+","+randHigh+") has priority: "+ ndPrio+" and Imax: "+ ndImax);
+            T.intervalInsert(nd);
+        }
+        Node firstLeft = T.getRoot();
+        System.out.println(firstLeft);
+        System.out.println("Root node has interval ("+firstLeft.getInterv().getLow()+","+firstLeft.getInterv().getHigh()+")");
+
 
     }
 
