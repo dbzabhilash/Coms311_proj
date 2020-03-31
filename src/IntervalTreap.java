@@ -31,9 +31,8 @@ public class IntervalTreap {
             int lastLeft = -1;
             int key = z.getInterv().getLow();
             while(temp!=null){
-//                lastVisit = temp;
                 if(key < temp.getInterv().getLow()){
-//                    temp = temp.getLeft();
+
                     lastLeft = 1;
                     if(temp.getLeft()==null) break;
                     temp = temp.getLeft();
