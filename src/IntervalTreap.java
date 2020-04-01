@@ -72,6 +72,10 @@ public class IntervalTreap {
                     leftRotate(z);
                 }
             }
+
+            //height
+
+
         }
     }
 
@@ -82,12 +86,13 @@ public class IntervalTreap {
     public Node intervalSearch(Interval i) {
         Node temp = root;
         while (temp != null && !overlap(temp.getInterv(), i)) {
-            if (temp.getLeft().getIMax() >= i.getLow() && temp.getLeft() != null) {
+            if (temp.getLeft() != null && temp.getLeft().getIMax() >= i.getLow()) {
                 temp = temp.getLeft();
             } else {
                 temp = temp.getRight();
             }
         }
+//        if(temp == null) return null;
         return temp;
     }
 
@@ -117,6 +122,17 @@ public class IntervalTreap {
         //  I am my original paa's parent
         paa.setParent(z);
 
+        //now re-validate iMax values
+        if(z.getRight()==null){
+            z.setIMax(Math.max(z.getInterv().getHigh(),z.getLeft().getIMax()));
+        }
+        else if(z.getLeft()==null){
+            z.setIMax(Math.max(z.getInterv().getHigh(),z.getRight().getIMax()));
+        }
+        else{
+            z.setIMax(Math.max(z.getInterv().getHigh(), Math.max(z.getLeft().getIMax(),z.getRight().getIMax())));
+        }
+
     }
 
     public void leftRotate(Node z) {
@@ -138,5 +154,16 @@ public class IntervalTreap {
         z.setParent(paa.getParent());      //TODO: paa.Parent might be null
         //  I am my original paa's parent
         paa.setParent(z);
+
+        //now re-validate iMax values
+        if(z.getRight()==null){
+            z.setIMax(Math.max(z.getInterv().getHigh(),z.getLeft().getIMax()));
+        }
+        else if(z.getLeft()==null){
+            z.setIMax(Math.max(z.getInterv().getHigh(),z.getRight().getIMax()));
+        }
+        else{
+            z.setIMax(Math.max(z.getInterv().getHigh(), Math.max(z.getLeft().getIMax(),z.getRight().getIMax())));
+        }
     }
 }

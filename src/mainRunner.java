@@ -54,11 +54,22 @@ public class mainRunner {
             if(ndPrio<lowest)   lowest = ndPrio;
             T.intervalInsert(nd);
         }
+        nd = new Node(new Interval(52,92));
+        T.intervalInsert(nd);
+
+
         Node rootNode = T.getRoot();
         System.out.println(rootNode);
-        System.out.println("Root node has interval ("+rootNode.getInterv().getLow()+","+rootNode.getInterv().getHigh()+")");
+        System.out.println("Root node has interval ("+rootNode.getInterv().getLow()+","+rootNode.getInterv().getHigh()+") and priority "+rootNode.getPriority() );
         System.out.println("The lowest priority is "+lowest);
+        Node someND = T.intervalSearch(new Interval(0,1));
+        if(someND == null){
+            System.out.println("Interval (15,70) falls in some Node with interval.Low ->  "+ T.intervalSearch(new Interval(0,100000)).getInterv().getLow());
 
+        }
+        else{
+            System.out.println("Interval (15,70) falls in some Node with interval.Low ->  "+ T.intervalSearch(new Interval(0,100000)).getInterv().getLow());
+        }
 
     }
 
