@@ -150,8 +150,26 @@ public class IntervalTreap {
         }
 
         //now adjust height
-        paa.setNodeHeight(Math.max(paa.getLeft().getNodeHeight(),paa.getRight().getNodeHeight())+1);
-        z.setNodeHeight(Math.max(z.getRight().getNodeHeight(),z.getLeft().getNodeHeight())+1);
+        int leftH = 0, rightH = 0;
+        if(paa.getLeft()!=null) leftH = paa.getLeft().getNodeHeight();
+        if(paa.getRight()!=null) rightH = paa.getRight().getNodeHeight();
+        if(paa.getLeft()==null && paa.getRight()==null){
+            paa.setNodeHeight(0);
+        }
+        else{
+            paa.setNodeHeight(Math.max(leftH,rightH)+1);
+        }
+
+        leftH = 0;
+        rightH = 0;
+        if(z.getLeft()!=null) leftH = z.getLeft().getNodeHeight();
+        if(z.getRight()!=null) rightH = z.getRight().getNodeHeight();
+        if(z.getLeft()==null && z.getRight()==null){
+            z.setNodeHeight(0);
+        }
+        else{
+            z.setNodeHeight(Math.max(leftH,rightH)+1);
+        }
     }
 
     public void leftRotate(Node z) {
@@ -184,9 +202,26 @@ public class IntervalTreap {
         }
 
         //now adjust height
-        paa.setNodeHeight(Math.max(paa.getLeft().getNodeHeight(),paa.getRight().getNodeHeight())+1);
-        z.setNodeHeight(Math.max(z.getRight().getNodeHeight(),z.getLeft().getNodeHeight())+1);
+        int leftH = 0, rightH = 0;
+        if(paa.getLeft()!=null) leftH = paa.getLeft().getNodeHeight();
+        if(paa.getRight()!=null) rightH = paa.getRight().getNodeHeight();
+        if(paa.getLeft()==null && paa.getRight()==null){
+            paa.setNodeHeight(0);
+        }
+        else{
+            paa.setNodeHeight(Math.max(leftH,rightH)+1);
+        }
 
+        leftH = 0;
+        rightH = 0;
+        if(z.getLeft()!=null) leftH = z.getLeft().getNodeHeight();
+        if(z.getRight()!=null) rightH = z.getRight().getNodeHeight();
+        if(z.getLeft()==null && z.getRight()==null){
+            z.setNodeHeight(0);
+        }
+        else{
+            z.setNodeHeight(Math.max(leftH,rightH)+1);
+        }
 
     }
 }
