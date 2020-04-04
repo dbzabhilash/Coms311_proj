@@ -85,7 +85,7 @@ public class IntervalTreap {
 
             //height
             temp = z;
-            counter =0;
+            counter = temp.getNodeHeight();
             while (temp.getParent() != null) {
                 counter++;
                 temp = temp.getParent();
@@ -137,7 +137,7 @@ public class IntervalTreap {
             }
         }
         z.setParent(paa.getParent());      //TODO: paa.Parent might be null
-        //  I am my original paa's parent
+        //  I am my original paa's parent after rotation
         paa.setParent(z);
 
         //now re-validate iMax values
@@ -149,6 +149,9 @@ public class IntervalTreap {
             z.setIMax(Math.max(z.getInterv().getHigh(), Math.max(z.getLeft().getIMax(), z.getRight().getIMax())));
         }
 
+        //now adjust height
+        paa.setNodeHeight(Math.max(paa.getLeft().getNodeHeight(),paa.getRight().getNodeHeight())+1);
+        z.setNodeHeight(Math.max(z.getRight().getNodeHeight(),z.getLeft().getNodeHeight())+1);
     }
 
     public void leftRotate(Node z) {
@@ -168,7 +171,7 @@ public class IntervalTreap {
             }
         }
         z.setParent(paa.getParent());      //TODO: paa.Parent might be null
-        //  I am my original paa's parent
+        //  I am my original paa's parent after rotation
         paa.setParent(z);
 
         //now re-validate iMax values
@@ -179,6 +182,10 @@ public class IntervalTreap {
         } else {
             z.setIMax(Math.max(z.getInterv().getHigh(), Math.max(z.getLeft().getIMax(), z.getRight().getIMax())));
         }
+
+        //now adjust height
+        paa.setNodeHeight(Math.max(paa.getLeft().getNodeHeight(),paa.getRight().getNodeHeight())+1);
+        z.setNodeHeight(Math.max(z.getRight().getNodeHeight(),z.getLeft().getNodeHeight())+1);
 
 
     }
