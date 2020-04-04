@@ -18,7 +18,8 @@ public class IntervalTreap {
     }
 
     public int getHeight() {
-        return height;
+        if(root == null)  return -1;
+        else return root.getNodeHeight();
     }
 
     public void intervalInsert(Node z) {
@@ -29,6 +30,7 @@ public class IntervalTreap {
             Node temp = root; //dont make this new lmao
             Node lastVisit = null;
             int lastLeft = -1;
+            int counter = 0;
             int key = z.getInterv().getLow();
 
             while (temp != null) {
@@ -64,6 +66,14 @@ public class IntervalTreap {
                 temp.setRight(z);
             } else System.out.println("Error: lastLeft not initialized, lastLeft =" + lastLeft);
             // lastLeft = -1 if not initialized otherwise
+            temp = z;
+            while (temp.getParent() != null) {
+                counter++;
+                temp = temp.getParent();
+                if(temp.getNodeHeight() < counter){
+                    temp.setNodeHeight(counter);
+                }
+            }
 
             while (z != root && z.getPriority() < z.getParent().getPriority()) {
                 if (z.getParent().getLeft() == z) {
@@ -74,7 +84,15 @@ public class IntervalTreap {
             }
 
             //height
-
+            temp = z;
+            counter =0;
+            while (temp.getParent() != null) {
+                counter++;
+                temp = temp.getParent();
+                if(temp.getNodeHeight() < counter){
+                    temp.setNodeHeight(counter);
+                }
+            }
 
         }
     }
@@ -123,14 +141,12 @@ public class IntervalTreap {
         paa.setParent(z);
 
         //now re-validate iMax values
-        if(z.getRight()==null){
-            z.setIMax(Math.max(z.getInterv().getHigh(),z.getLeft().getIMax()));
-        }
-        else if(z.getLeft()==null){
-            z.setIMax(Math.max(z.getInterv().getHigh(),z.getRight().getIMax()));
-        }
-        else{
-            z.setIMax(Math.max(z.getInterv().getHigh(), Math.max(z.getLeft().getIMax(),z.getRight().getIMax())));
+        if (z.getRight() == null) {
+            z.setIMax(Math.max(z.getInterv().getHigh(), z.getLeft().getIMax()));
+        } else if (z.getLeft() == null) {
+            z.setIMax(Math.max(z.getInterv().getHigh(), z.getRight().getIMax()));
+        } else {
+            z.setIMax(Math.max(z.getInterv().getHigh(), Math.max(z.getLeft().getIMax(), z.getRight().getIMax())));
         }
 
     }
@@ -156,14 +172,14 @@ public class IntervalTreap {
         paa.setParent(z);
 
         //now re-validate iMax values
-        if(z.getRight()==null){
-            z.setIMax(Math.max(z.getInterv().getHigh(),z.getLeft().getIMax()));
+        if (z.getRight() == null) {
+            z.setIMax(Math.max(z.getInterv().getHigh(), z.getLeft().getIMax()));
+        } else if (z.getLeft() == null) {
+            z.setIMax(Math.max(z.getInterv().getHigh(), z.getRight().getIMax()));
+        } else {
+            z.setIMax(Math.max(z.getInterv().getHigh(), Math.max(z.getLeft().getIMax(), z.getRight().getIMax())));
         }
-        else if(z.getLeft()==null){
-            z.setIMax(Math.max(z.getInterv().getHigh(),z.getRight().getIMax()));
-        }
-        else{
-            z.setIMax(Math.max(z.getInterv().getHigh(), Math.max(z.getLeft().getIMax(),z.getRight().getIMax())));
-        }
+
+
     }
 }
