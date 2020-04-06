@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class mainRunner {
@@ -42,6 +43,7 @@ public class mainRunner {
         //  Test treap insertion
         IntervalTreap T = new IntervalTreap();
         int lowest = Integer.MAX_VALUE;
+        ArrayList<Node> nodeList = new ArrayList<Node>();
         for(int n=0; n<5; n++){
             randLow = rand.nextInt(100);
             randHigh = rand.nextInt(100) + randLow;
@@ -52,10 +54,12 @@ public class mainRunner {
             System.out.println("Node nd"+(n+1)+" stores interval " +
                     "("+randLow+","+randHigh+") has priority: "+ ndPrio+" and Imax: "+ ndImax);
             if(ndPrio<lowest)   lowest = ndPrio;
+            nodeList.add(nd);
             T.intervalInsert(nd);
         }
         nd = new Node(new Interval(52,92));
         T.intervalInsert(nd);
+        T.intervalDelete(nd);
         System.out.println("Height: "+T.getHeight());
         System.out.println("The imax of one of its children is:"+T.tester(nd));
 

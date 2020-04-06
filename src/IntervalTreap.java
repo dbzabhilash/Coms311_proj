@@ -97,34 +97,106 @@ public class IntervalTreap {
     }
 
     public void intervalDelete(Node z) { //TODO
-
+        size--;
         if (z.getLeft() != null && z.getRight() != null) {
             Node succ = Minimum(z.getRight());
-            // detatching successor from its parent
-            succ.getParent().setLeft(succ.getRight());
-            succ.getRight().setParent(succ.getParent());
-            // swapping succ w z
-            succ.setLeft(z.getLeft());
-            z.getLeft().setParent(succ);
-            succ.setRight(z.getRight());
-            z.getRight().setParent(succ);
-            succ.setParent(z.getParent());
-            if(z.getParent().getLeft()==z){
+
+            if(succ.getParent() == z) {
+                succ.setLeft(z.getLeft());
+                z.getLeft().setParent(succ);
+                succ.setParent(z.getParent());
+            }
+            else {
+
+//******************************************************************************
+                //adjust height
+//                Node paa = succ.getParent();
+//                succ.setNodeHeight(succ.getNodeHeight()-1);  // or int paaLeftH = succ.getNodeHeight()-1
+//                while(paa.getParent()!=null){
+//                    paa.setNodeHeight(Integer.max(paa.getLeft().getNodeHeight(), paa.getRight().getNodeHeight()));
+//                    paa = paa.getParent();
+//                }
+//
+//                // or
+//
+//
+//                if (paa.getLeft() == null && paa.getRight() == null) {
+//                    paa.setNodeHeight(0);
+//                } else {
+//                    paa.setNodeHeight(Math.max(leftH, rightH) + 1);
+//                }
+//********************************************************************************************
+
+                // detatching successor from its parent
+                succ.getParent().setLeft(succ.getRight());
+                succ.getRight().setParent(succ.getParent());
+
+                //  adjust height
+                Node paa = succ.getParent();
+                int leftH = 0, rightH = 0;
+                while(paa.getParent()!=null){
+                    // to handle NullPointer Exception
+                    if (paa.getLeft() == null) leftH = 0;
+                    else leftH = paa.getLeft().getNodeHeight();
+                    if (paa.getRight() == null) rightH = 0;
+                    else rightH = paa.getRight().getNodeHeight();
+
+                    // if both heights left and right are 0
+                    if(isLeaf(paa)) paa.setNodeHeight(0);
+                    else paa.setNodeHeight(Integer.max(leftH,rightH)+1);
+                    paa = paa.getParent();
+                }
+
+
+                // swapping succ w z
+                succ.setLeft(z.getLeft());
+                z.getLeft().setParent(succ);
+                succ.setRight(z.getRight());
+                z.getRight().setParent(succ);
+                succ.setParent(z.getParent());
+                succ.setNodeHeight(z.getNodeHeight());
+            }
+            if(z.getParent()!=null && z.getParent().getLeft()==z){
                 z.getParent().setLeft(succ);
             }
-            else{
+            else if(z.getParent()!=null && z.getParent().getRight()==z){
                 z.getParent().setRight(succ);
+            }
+            else{
+                root = succ;
             }
 
             //Maintaining priority
-            int leftPrio, rightPrio;
-            leftPrio = succ.getLeft().getPriority();
-            rightPrio = succ.getRight().getPriority();
-            if(succ.getLeft()==null)    leftPrio = -1;
-            if(succ.getRight()==null)    rightPrio = -1;
 
-            while (succ.getLeft()!=null || succ.getRight()!=null){
-                if(succ)
+            while (!isLeaf(succ)){
+                if(leftExist(succ) && !rightExist(succ)){  // if succ only has left child
+                    if(succ.getPriority() > succ.getLeft().getPriority())   rightRotate(succ.getLeft());
+                    else break;
+                }
+                else if(!leftExist(succ) && rightExist(succ)){  // if succ only has right child
+                    if(succ.getPriority() > succ.getRight().getPriority())   leftRotate(succ.getRight());
+                    else break;
+                }
+                //  if succ has both children
+                else{
+                    if(succ.getPriority() < succ.getLeft().getPriority() && succ.getPriority() < succ.getRight().getPriority()) break;
+
+                    else if(succ.getLeft().getPriority() < succ.getRight().getPriority()){
+                            rightRotate(succ.getLeft());
+                    }
+                    else leftRotate(succ.getRight());
+                }
+            }
+
+            //fixing height for every node in path upwards TODO: check if this is needed
+            Node paa = succ.getParent();
+            int counter = paa.getNodeHeight();
+            while(paa.getParent()!=null){
+                counter++;
+                paa = paa.getParent();
+                if (paa.getNodeHeight() < counter) {
+                    paa.setNodeHeight(counter);
+                }
             }
 
 
@@ -310,5 +382,18 @@ public class IntervalTreap {
         } else {
             return 0;
         }
+    }
+
+    public boolean isLeaf(Node node){
+        if(node.getLeft() == null && node.getRight()==null) return true;
+        else return false;
+    }
+    public boolean leftExist(Node node){
+        if(node.getLeft()!=null) return true;
+        else return false;
+    }
+    public boolean rightExist(Node node){
+        if(node.getRight()!=null) return true;
+        else return false;
     }
 }
