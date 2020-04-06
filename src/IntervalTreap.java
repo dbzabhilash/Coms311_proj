@@ -115,17 +115,33 @@ public class IntervalTreap {
             else{
                 z.getParent().setRight(succ);
             }
-
-            //Maintaining priority
-            int leftPrio, rightPrio;
-            leftPrio = succ.getLeft().getPriority();
-            rightPrio = succ.getRight().getPriority();
-            if(succ.getLeft()==null)    leftPrio = -1;
-            if(succ.getRight()==null)    rightPrio = -1;
-
-            while (succ.getLeft()!=null || succ.getRight()!=null){
-                if(succ)
+            //rotation for priority maintaining
+            while((succ.getRight()!=null || succ.getLeft()!=null)){
+                if(succ.getLeft() == null && succ.getRight() != null){
+                    if(succ.getPriority()>succ.getRight().getPriority()){
+                        leftRotate(succ.getRight());
+                    }
+                    else break;
+                }
+                else if(succ.getLeft() != null && succ.getRight() == null){
+                    if(succ.getPriority()>succ.getLeft().getPriority()){
+                        rightRotate(succ.getLeft());
+                    }
+                    else break;
+                }
+                else{//has 2 children
+                    if(succ.getPriority() < succ.getRight().getPriority() && succ.getPriority() < succ.getLeft().getPriority()){
+                        break;
+                    }
+                    else if(succ.getRight().getPriority() < succ.getLeft().getPriority()){
+                        leftRotate(succ.getRight());
+                    }
+                    else{
+                        rightRotate(succ.getLeft());
+                    }
+                }
             }
+
 
 
         }
