@@ -1,3 +1,7 @@
+/**
+ * Authors: Abhilash Tripathy, Abir Mojumder
+ */
+
 public class Interval {
     private int low;
     private int high;

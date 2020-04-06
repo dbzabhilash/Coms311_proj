@@ -1,5 +1,7 @@
 import java.util.Random;
-
+/**
+ * Authors: Abhilash Tripathy, Abir Mojumder
+ */
 public class Node {
     private Node left = null;
     private Node right = null;
@@ -12,9 +14,8 @@ public class Node {
         interv = i;
         //TODO: generate a priority for the node
         Random random = new Random();
-//        priority = random.nextInt(Integer.MAX_VALUE);
-        priority = random.nextInt(100);
-        // imax set to i.getHigh() by default
+        priority = random.nextInt(Integer.MAX_VALUE);
+
         imax = i.getHigh();
         nodeHeight = 0;
     }
@@ -28,15 +29,7 @@ public class Node {
         priority = node_OG.getPriority();
 
     }
-    public Node cloner(Node node_OG){
-        Node retNode = new Node(node_OG.getInterv());
-        retNode.setLeft(node_OG.getLeft());
-        retNode.setRight(node_OG.getRight());
-        retNode.setParent(node_OG.getParent());
-        retNode.setIMax(node_OG.getIMax());
-        retNode.setPriority(node_OG.getPriority());
-        return retNode;
-    }
+
     public Node getParent(){
         return parent;
     }
@@ -79,10 +72,7 @@ public class Node {
         this.imax = newImax;
         return this.imax;
     }
-    public int setPriority(int newPriority){
-        this.priority = newPriority;
-        return this.priority;
-    }
+
     public int setNodeHeight(int nodeHeight){
         this.nodeHeight = nodeHeight;
         return this.nodeHeight;
