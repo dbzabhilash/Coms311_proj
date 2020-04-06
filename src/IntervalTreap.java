@@ -124,10 +124,7 @@ public class IntervalTreap {
             if(succ.getRight()==null)    rightPrio = -1;
 
             while (succ.getLeft()!=null || succ.getRight()!=null){
-                if(succ.getPriority() > leftPrio || succ.getPriority() > rightPrio){
-                    
-                }
-
+                if(succ)
             }
 
 
