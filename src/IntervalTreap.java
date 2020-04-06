@@ -18,13 +18,12 @@ public class IntervalTreap {
     }
 
     public int getHeight() {
-        if(root == null)  return -1;
+        if (root == null) return -1;
         else return root.getNodeHeight();
     }
 
     public void intervalInsert(Node z) {
         size++;     // update size to reflect new number of nodes in treap
-//        height++;   // update height to reflect new number of nodes in treap
         if (root == null) root = z;
         else {
             Node temp = root; //dont make this new lmao
@@ -70,7 +69,7 @@ public class IntervalTreap {
             while (temp.getParent() != null) {
                 counter++;
                 temp = temp.getParent();
-                if(temp.getNodeHeight() < counter){
+                if (temp.getNodeHeight() < counter) {
                     temp.setNodeHeight(counter);
                 }
             }
@@ -89,7 +88,7 @@ public class IntervalTreap {
             while (temp.getParent() != null) {
                 counter++;
                 temp = temp.getParent();
-                if(temp.getNodeHeight() < counter){
+                if (temp.getNodeHeight() < counter) {
                     temp.setNodeHeight(counter);
                 }
             }
@@ -97,8 +96,86 @@ public class IntervalTreap {
         }
     }
 
-    public void intervalDelete(Node z) {
-        //TODO: decrease the size by 1 upon successfully deleting node
+    public void intervalDelete(Node z) { //TODO
+
+        if (z.getLeft() != null && z.getRight() != null) {
+            Node succ = Minimum(z.getRight());
+            // detatching successor from its parent
+            succ.getParent().setLeft(succ.getRight());
+            succ.getRight().setParent(succ.getParent());
+            // swapping succ w z
+            succ.setLeft(z.getLeft());
+            z.getLeft().setParent(succ);
+            succ.setRight(z.getRight());
+            z.getRight().setParent(succ);
+            succ.setParent(z.getParent());
+            if(z.getParent().getLeft()==z){
+                z.getParent().setLeft(succ);
+            }
+            else{
+                z.getParent().setRight(succ);
+            }
+
+            //Maintaining priority
+            int leftPrio, rightPrio;
+            leftPrio = succ.getLeft().getPriority();
+            rightPrio = succ.getRight().getPriority();
+            if(succ.getLeft()==null)    leftPrio = -1;
+            if(succ.getRight()==null)    rightPrio = -1;
+
+            while (succ.getLeft()!=null || succ.getRight()!=null){
+                if(succ.getPriority() > leftPrio || succ.getPriority() > rightPrio){
+                    
+                }
+
+            }
+
+
+        }
+        else if (z.getLeft() == null && z.getRight() != null) {
+
+            if (z == root) {
+                root = z.getRight();
+            }
+            else{
+                Node parent = z.getParent();
+                if (parent.getLeft() == z) {
+                    parent.setLeft(z.getRight());
+                }
+                else {
+                    parent.setRight(z.getRight());
+                }
+                z.getRight().setParent(parent);
+            }
+        }
+        else if (z.getRight() == null && z.getLeft() != null) {
+            if (z == root) {
+                root = z.getLeft();
+                z.getLeft().setParent(null); //new root must not have parent
+            }
+            else {
+                Node parent = z.getParent();
+                if (parent.getLeft() == z) {
+                    parent.setLeft(z.getLeft());
+                }
+                else {
+                    parent.setRight(z.getLeft());
+                }
+                z.getLeft().setParent(parent);
+            }
+        }
+        else {
+            //z is leaf node, just remove it
+            if (z == root) {
+                root = null;
+            } else if (z.getParent().getLeft() == z) {
+                //z is left child
+                z.getParent().setLeft(null);
+            } else {
+                z.getParent().setRight(null);
+            }
+        }
+
     }
 
     public Node intervalSearch(Interval i) {
@@ -151,24 +228,22 @@ public class IntervalTreap {
 
         //now adjust height
         int leftH = 0, rightH = 0;
-        if(paa.getLeft()!=null) leftH = paa.getLeft().getNodeHeight();
-        if(paa.getRight()!=null) rightH = paa.getRight().getNodeHeight();
-        if(paa.getLeft()==null && paa.getRight()==null){
+        if (paa.getLeft() != null) leftH = paa.getLeft().getNodeHeight();
+        if (paa.getRight() != null) rightH = paa.getRight().getNodeHeight();
+        if (paa.getLeft() == null && paa.getRight() == null) {
             paa.setNodeHeight(0);
-        }
-        else{
-            paa.setNodeHeight(Math.max(leftH,rightH)+1);
+        } else {
+            paa.setNodeHeight(Math.max(leftH, rightH) + 1);
         }
 
         leftH = 0;
         rightH = 0;
-        if(z.getLeft()!=null) leftH = z.getLeft().getNodeHeight();
-        if(z.getRight()!=null) rightH = z.getRight().getNodeHeight();
-        if(z.getLeft()==null && z.getRight()==null){
+        if (z.getLeft() != null) leftH = z.getLeft().getNodeHeight();
+        if (z.getRight() != null) rightH = z.getRight().getNodeHeight();
+        if (z.getLeft() == null && z.getRight() == null) {
             z.setNodeHeight(0);
-        }
-        else{
-            z.setNodeHeight(Math.max(leftH,rightH)+1);
+        } else {
+            z.setNodeHeight(Math.max(leftH, rightH) + 1);
         }
     }
 
@@ -203,25 +278,40 @@ public class IntervalTreap {
 
         //now adjust height
         int leftH = 0, rightH = 0;
-        if(paa.getLeft()!=null) leftH = paa.getLeft().getNodeHeight();
-        if(paa.getRight()!=null) rightH = paa.getRight().getNodeHeight();
-        if(paa.getLeft()==null && paa.getRight()==null){
+        if (paa.getLeft() != null) leftH = paa.getLeft().getNodeHeight();
+        if (paa.getRight() != null) rightH = paa.getRight().getNodeHeight();
+        if (paa.getLeft() == null && paa.getRight() == null) {
             paa.setNodeHeight(0);
-        }
-        else{
-            paa.setNodeHeight(Math.max(leftH,rightH)+1);
+        } else {
+            paa.setNodeHeight(Math.max(leftH, rightH) + 1);
         }
 
         leftH = 0;
         rightH = 0;
-        if(z.getLeft()!=null) leftH = z.getLeft().getNodeHeight();
-        if(z.getRight()!=null) rightH = z.getRight().getNodeHeight();
-        if(z.getLeft()==null && z.getRight()==null){
+        if (z.getLeft() != null) leftH = z.getLeft().getNodeHeight();
+        if (z.getRight() != null) rightH = z.getRight().getNodeHeight();
+        if (z.getLeft() == null && z.getRight() == null) {
             z.setNodeHeight(0);
-        }
-        else{
-            z.setNodeHeight(Math.max(leftH,rightH)+1);
+        } else {
+            z.setNodeHeight(Math.max(leftH, rightH) + 1);
         }
 
+    }
+
+    //helper methods
+    public Node Minimum(Node z){
+        Node current = z;
+        while(current.getLeft()!=null) current = current.getLeft();
+        return current;
+    }
+    public int tester(Node node) {
+
+        if (node.getLeft() != null) {
+            return node.getLeft().getIMax();
+        } else if (node.getRight() != null) {
+            return node.getRight().getIMax();
+        } else {
+            return 0;
+        }
     }
 }

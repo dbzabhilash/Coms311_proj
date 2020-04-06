@@ -54,11 +54,11 @@ public class mainRunner {
             if(ndPrio<lowest)   lowest = ndPrio;
             T.intervalInsert(nd);
         }
+        nd = new Node(new Interval(52,92));
+        T.intervalInsert(nd);
         System.out.println("Height: "+T.getHeight());
+        System.out.println("The imax of one of its children is:"+T.tester(nd));
 
-//        nd = new Node(new Interval(52,92));
-
-//        T.intervalInsert(nd);
 //
 //
 //        Node rootNode = T.getRoot();
