@@ -60,6 +60,11 @@ public class mainRunner {
         nd = new Node(new Interval(52,92));
         T.intervalInsert(nd);
         T.intervalDelete(nd);
+        T.intervalDelete(nodeList.get(2));
+
+        System.out.println("nd ("+nd.getInterv().getLow()+","+nd.getInterv().getHigh()+")");
+        System.out.println("nodesList ("+nodeList.get(2).getInterv().getLow()+","+nodeList.get(2).getInterv().getHigh()+")");
+
         System.out.println("Height: "+T.getHeight());
         System.out.println("The imax of one of its children is:"+T.tester(nd));
 
