@@ -78,4 +78,9 @@ public class Node {
         return this.nodeHeight;
     }
 
+    public int setPriority(int priority){
+        this.priority = priority;
+        return this.priority;
+    }
+
 }

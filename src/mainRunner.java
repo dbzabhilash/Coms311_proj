@@ -43,22 +43,42 @@ public class mainRunner {
         //  Test treap insertion
         IntervalTreap T = new IntervalTreap();
         int lowest = Integer.MAX_VALUE;
-        ArrayList<Node> nodeList = new ArrayList<Node>();
-        for(int n=0; n<5; n++){
-            randLow = rand.nextInt(100);
-            randHigh = rand.nextInt(100) + randLow;
-            i = new Interval(randLow,randHigh);
-            nd = new Node(i);
-            ndPrio = nd.getPriority();
-            ndImax = nd.getIMax();
-            System.out.println("Node nd"+(n+1)+" stores interval " +
-                    "("+randLow+","+randHigh+") has priority: "+ ndPrio+" and Imax: "+ ndImax);
-            if(ndPrio<lowest)   lowest = ndPrio;
-            nodeList.add(nd);
-            T.intervalInsert(nd);
-        }
+//        ArrayList<Node> nodeList = new ArrayList<Node>();
+//        for(int n=0; n<5; n++){
+//            randLow = rand.nextInt(100);
+//            randHigh = rand.nextInt(100) + randLow;
+//            i = new Interval(randLow,randHigh);
+//            nd = new Node(i);
+//            ndPrio = nd.getPriority();
+//            ndImax = nd.getIMax();
+//            System.out.println("Node nd"+(n+1)+" stores interval " +
+//                    "("+randLow+","+randHigh+") has priority: "+ ndPrio+" and Imax: "+ ndImax);
+//            if(ndPrio<lowest)   lowest = ndPrio;
+//            nodeList.add(nd);
+//            T.intervalInsert(nd);
+//        }
+
+        nd = new Node(new Interval(53, 76));
+        nd.setPriority(700);
+        T.intervalInsert(nd);
+        nd = new Node(new Interval(85, 93));
+        nd.setPriority(400);
+        T.intervalInsert(nd);
+
+        nd = new Node(new Interval(41, 133));
+        nd.setPriority(333);
+        T.intervalInsert(nd);
+
+        nd = new Node(new Interval(89, 186));
+        nd.setPriority(200);
+        T.intervalInsert(nd);
+
+        nd = new Node(new Interval(92, 185));
+        nd.setPriority(469);
+        T.intervalInsert(nd);
 
         nd = new Node(new Interval(52,92));
+        nd.setPriority(190);
 
         T.intervalInsert(nd);
         T.intervalDelete(nd);
@@ -68,6 +88,7 @@ public class mainRunner {
         //System.out.println("nodesList ("+nodeList.get(2).getInterv().getLow()+","+nodeList.get(2).getInterv().getHigh()+")");
 
         System.out.println("Height: "+T.getHeight());
+        System.out.println("52, 92 prio : "+nd.getPriority());
 
 
 //        System.out.println("The imax of one of its children is:"+T.tester(nd));

@@ -68,6 +68,7 @@ public class IntervalTreap {
                 temp.setRight(z);
             } else System.out.println("Error: lastLeft not initialized, lastLeft =" + lastLeft);
             // lastLeft = -1 if not initialized otherwise
+
             temp = z;
             while (temp.getParent() != null) {
                 counter++;
@@ -111,8 +112,6 @@ public class IntervalTreap {
             }
             else {
 
-
-
                 // detatching successor from its parent
                 if(succ.getRight()!=null) {
                     succ.getParent().setLeft(succ.getRight());
@@ -125,7 +124,7 @@ public class IntervalTreap {
                 //  adjust height
                 Node paa = succ.getParent();
                 int leftH = 0, rightH = 0;
-                while(paa.getParent()!=null){
+                while(paa!=null){
                     // to handle NullPointer Exception
                     if (paa.getLeft() == null) leftH = 0;
                     else leftH = paa.getLeft().getNodeHeight();
@@ -134,9 +133,13 @@ public class IntervalTreap {
 
                     // if both heights left and right are 0
                     if(isLeaf(paa)) paa.setNodeHeight(0);
-                    else paa.setNodeHeight(Integer.max(leftH,rightH)+1);
+                    else paa.setNodeHeight(Math.max(leftH,rightH)+1);
 
-                    if (paa.getRight() == null) {
+                    // setting imax
+                    if(isLeaf(paa)) {
+                        paa.setIMax(paa.getInterv().getHigh());
+                    }
+                    else if (paa.getRight() == null) {
                         paa.setIMax(Math.max(paa.getInterv().getHigh(), paa.getLeft().getIMax()));
                     } else if (paa.getLeft() == null) {
                         paa.setIMax(Math.max(paa.getInterv().getHigh(), paa.getRight().getIMax()));
@@ -191,7 +194,8 @@ public class IntervalTreap {
             //  adjust height
             Node paa = succ.getParent();
             int leftH = 0, rightH = 0;
-            while(paa.getParent()!=null){
+            while(paa!=null){
+                paa.setNodeHeight(0);
                 // to handle NullPointer Exception
                 if (paa.getLeft() == null) leftH = 0;
                 else leftH = paa.getLeft().getNodeHeight();
@@ -202,7 +206,11 @@ public class IntervalTreap {
                 if(isLeaf(paa)) paa.setNodeHeight(0);
                 else paa.setNodeHeight(Integer.max(leftH,rightH)+1);
 
-                if (paa.getRight() == null) {
+                // setting imax
+                if(isLeaf(paa)) {
+                    paa.setIMax(paa.getInterv().getHigh());
+                }
+                else if (paa.getRight() == null) {
                     paa.setIMax(Math.max(paa.getInterv().getHigh(), paa.getLeft().getIMax()));
                 } else if (paa.getLeft() == null) {
                     paa.setIMax(Math.max(paa.getInterv().getHigh(), paa.getRight().getIMax()));
@@ -234,7 +242,7 @@ public class IntervalTreap {
 
                 Node paa = z.getParent();
                 int leftH = 0, rightH = 0;
-                while(paa.getParent()!=null){
+                while(paa!=null){
                     // to handle NullPointer Exception
                     if (paa.getLeft() == null) leftH = 0;
                     else leftH = paa.getLeft().getNodeHeight();
@@ -245,7 +253,11 @@ public class IntervalTreap {
                     if(isLeaf(paa)) paa.setNodeHeight(0);
                     else paa.setNodeHeight(Integer.max(leftH,rightH)+1);
 
-                    if (paa.getRight() == null) {
+                    // setting imax
+                    if(isLeaf(paa)) {
+                        paa.setIMax(paa.getInterv().getHigh());
+                    }
+                    else if (paa.getRight() == null) {
                         paa.setIMax(Math.max(paa.getInterv().getHigh(), paa.getLeft().getIMax()));
                     } else if (paa.getLeft() == null) {
                         paa.setIMax(Math.max(paa.getInterv().getHigh(), paa.getRight().getIMax()));
@@ -275,7 +287,7 @@ public class IntervalTreap {
                 //height
                 Node paa = z.getParent();
                 int leftH = 0, rightH = 0;
-                while(paa.getParent()!=null){
+                while(paa!=null){
                     // to handle NullPointer Exception
                     if (paa.getLeft() == null) leftH = 0;
                     else leftH = paa.getLeft().getNodeHeight();
@@ -286,7 +298,11 @@ public class IntervalTreap {
                     if(isLeaf(paa)) paa.setNodeHeight(0);
                     else paa.setNodeHeight(Integer.max(leftH,rightH)+1);
 
-                    if (paa.getRight() == null) {
+                    // setting imax
+                    if(isLeaf(paa)) {
+                        paa.setIMax(paa.getInterv().getHigh());
+                    }
+                    else if (paa.getRight() == null) {
                         paa.setIMax(Math.max(paa.getInterv().getHigh(), paa.getLeft().getIMax()));
                     } else if (paa.getLeft() == null) {
                         paa.setIMax(Math.max(paa.getInterv().getHigh(), paa.getRight().getIMax()));
@@ -311,7 +327,7 @@ public class IntervalTreap {
             //height
             Node paa = z.getParent();
             int leftH = 0, rightH = 0;
-            while(paa.getParent()!=null){
+            while(paa!=null){
                 // to handle NullPointer Exception
                 if (paa.getLeft() == null) leftH = 0;
                 else leftH = paa.getLeft().getNodeHeight();
@@ -357,6 +373,9 @@ public class IntervalTreap {
 
     public void rightRotate(Node z) {
         z.getParent().setLeft(z.getRight());
+        if(z.getRight()!=null){
+            z.getRight().setParent(z.getParent());
+        }
         z.setRight(z.getParent());
         Node paa = z.getParent();
 
@@ -419,6 +438,9 @@ public class IntervalTreap {
 
     public void leftRotate(Node z) {
         z.getParent().setRight(z.getLeft());
+        if(z.getLeft()!=null){
+            z.getLeft().setParent(z.getParent());
+        }
         z.setLeft(z.getParent());
         Node paa = z.getParent();
 
